@@ -4,54 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Titanic Survivor Predictor</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <style>
-        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #0056b3; }
-        form div { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input[type="text"], input[type="number"], select {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .result {
-            margin-top: 25px;
-            padding: 15px;
-            border-radius: 5px;
-            background-color: #e9ecef;
-            text-align: center;
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-        .survived { color: #28a745; }
-        .not-survived { color: #dc3545; }
-
-        /* Styles for Lottie animation containers */
-        .animation-container {
-            width: 200px; /* Adjust size as needed */
-            height: 200px; /* Adjust size as needed */
-            margin: 20px auto;
-            display: none; /* Hidden by default */
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -99,7 +53,7 @@
             <div id="survive-animation-container" class="animation-container">
                 <lottie-player
                     id="survive-animation"
-                    src="{{ url_for('static', filename='lotties/titanic_roulette.json') }}"
+                    src="lotties/survived.json"
                     background="transparent"
                     speed="1"
                     autoplay
@@ -110,7 +64,7 @@
             <div id="not-survive-animation-container" class="animation-container">
                 <lottie-player
                     id="not-survive-animation"
-                    src="{{ url_for('static', filename='lotties/titanic_roulette.json') }}"
+                    src="lotties/not_survived.json"
                     background="transparent"
                     speed="1"
                     autoplay
@@ -118,8 +72,8 @@
                 ></lottie-player>
             </div>
 
-            <!-- <audio id="survive-sound" src="{{ url_for('static', filename='sounds/survive_sound.mp3') }}" preload="auto"></audio>
-            <audio id="not-survive-sound" src="{{ url_for('static', filename='sounds/not_survive_sound.mp3') }}" preload="auto"></audio> -->
+            <audio id="survive-sound" src="sounds/survived.mp3" preload="auto"></audio>
+            <audio id="not-survive-sound" src="sounds/not_survived.mp3" preload="auto"></audio>
 
             <script>
                 // Get the prediction value passed from Flask
@@ -128,10 +82,10 @@
                 if (predictionValue !== null) {
                     if (predictionValue === 1) { // Survive
                         document.getElementById('survive-animation-container').style.display = 'block';
-                        // document.getElementById('survive-sound').play();
+                        document.getElementById('survive-sound').play();
                     } else { // Not Survive
                         document.getElementById('not-survive-animation-container').style.display = 'block';
-                        // document.getElementById('not-survive-sound').play();
+                        document.getElementById('not-survive-sound').play();
                     }
                 }
             </script>
