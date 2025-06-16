@@ -27,7 +27,20 @@ def index():
             age = float(request.form['age'])
             has_child = int(request.form['has_child'])
             family_size = int(request.form['family_size'])
+            # deck_level = request.form['deck_level'] # New: Get deck level
 
+            # --- Important: You'll need to map deck_level (A-G) to a numerical value
+            #    that your model understands. This is just an example.
+            #    Replace this with your model's actual feature engineering for deck.
+            # deck_mapping = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6}
+            # deck_numeric = deck_mapping.get(deck_level, -1) # Default to -1 or handle error
+
+            # if deck_numeric == -1:
+            #      raise ValueError("Invalid deck level selected.")
+
+            # Assuming your model features include this new deck_numeric
+            # Adjust this 'features' array to match the order and number of features
+            # your titanic_model.joblib expects, including the new deck information.
             features = np.array([[sex, pclass, is_alone, age, has_child, family_size]])
 
             prediction = model.predict(features)[0]
@@ -37,8 +50,8 @@ def index():
             confidence_level = f"{prediction_proba[prediction] * 100:.2f}%"
             prediction_value = int(prediction) # Convert to int for easier JS handling
 
-        except ValueError:
-            prediction_text = "Invalid input. Please ensure all fields are correctly filled."
+        except ValueError as ve:
+            prediction_text = f"Invalid input: {ve}. Please ensure all fields are correctly filled and a deck level is selected."
         except Exception as e:
             prediction_text = f"An error occurred during prediction: {e}"
 
@@ -48,4 +61,9 @@ def index():
                            prediction_value=prediction_value)
 
 if __name__ == '__main__':
+    # Ensure the model file exists before running
+    if not os.path.exists(model_name):
+        print(f"CRITICAL ERROR: Model file '{model_name}' not found. Please train and save your model first.")
+        # You might want to exit or provide a mock model for development if the file is missing
+        # sys.exit(1) # Uncomment to exit if model is crucial
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 8080))

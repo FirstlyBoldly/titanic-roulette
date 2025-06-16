@@ -3,93 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Titanic Survivor Predictor</title>
+    <title>Titanic Roulette</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script type="module" src="main.js" defer></script>
 </head>
-<body>
-    <div class="container">
-        <h1>Titanic Survivor Predictor</h1>
-
-        <form action="/" method="post">
-            <div>
-                <label for="sex">Sex:</label>
-                <select id="sex" name="sex" required>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
+<body class="main-hull-background">
+    <h1 class="main-title">Titanic Roulette</h1>
+    <div class="content-wrapper">
+        <div class="deck-selection-group">
+            <label>Select Your Deck Level:</label>
+            <div class="titanic-cross-section-container">
+                <img src="images/titanic_crosssection.jpeg" alt="Titanic Cross-Section" class="titanic-cross-section-image" id="titanic-deck-image">
+                <div class="deck-hotspot" id="deck-A" data-deck="A">A</div>
+                <div class="deck-hotspot" id="deck-B" data-deck="B">B</div>
+                <div class="deck-hotspot" id="deck-C" data-deck="C">C</div>
+                <div class="deck-hotspot" id="deck-D" data-deck="D">D</div>
+                <div class="deck-hotspot" id="deck-E" data-deck="E">E</div>
+                <div class="deck-hotspot" id="deck-F" data-deck="F">F</div>
+                <div class="deck-hotspot" id="deck-G" data-deck="G">G</div>
             </div>
-            <div>
-                <label for="pclass">Passenger Class (1, 2, or 3):</label>
-                <input type="number" id="pclass" name="pclass" min="1" max="3" required>
-            </div>
-            <div>
-                <label for="is_alone">Traveling Alone? (0 for No, 1 for Yes):</label>
-                <input type="number" id="is_alone" name="is_alone" min="0" max="1" required>
-            </div>
-            <div>
-                <label for="age">Age:</label>
-                <input type="number" id="age" name="age" step="0.1" required>
-            </div>
-            <div>
-                <label for="has_child">Has Child? (0 for No, 1 for Yes):</label>
-                <input type="number" id="has_child" name="has_child" min="0" max="1" required>
-            </div>
-            <div>
-                <label for="family_size">Family Size (including yourself):</label>
-                <input type="number" id="family_size" name="family_size" min="1" required>
-            </div>
-            <button type="submit">Predict Survival</button>
-        </form>
-
-        {% if prediction_text %}
-            <div class="result {% if 'survive' in prediction_text %}survived{% else %}not-survived{% endif %}">
-                <p>{{ prediction_text }}</p>
-                {% if confidence_level %}
-                    <p>Confidence: {{ confidence_level }}</p>
-                {% endif %}
-            </div>
-
-            <div id="survive-animation-container" class="animation-container">
-                <lottie-player
-                    id="survive-animation"
-                    src="lotties/survived.json"
-                    background="transparent"
-                    speed="1"
-                    autoplay
-                    loop
-                ></lottie-player>
-            </div>
-
-            <div id="not-survive-animation-container" class="animation-container">
-                <lottie-player
-                    id="not-survive-animation"
-                    src="lotties/not_survived.json"
-                    background="transparent"
-                    speed="1"
-                    autoplay
-                    loop
-                ></lottie-player>
-            </div>
-
-            <audio id="survive-sound" src="sounds/survived.mp3" preload="auto"></audio>
-            <audio id="not-survive-sound" src="sounds/not_survived.mp3" preload="auto"></audio>
-
-            <script>
-                // Get the prediction value passed from Flask
-                const predictionValue = {{ prediction_value | tojson }};
-
-                if (predictionValue !== null) {
-                    if (predictionValue === 1) { // Survive
-                        document.getElementById('survive-animation-container').style.display = 'block';
-                        document.getElementById('survive-sound').play();
-                    } else { // Not Survive
-                        document.getElementById('not-survive-animation-container').style.display = 'block';
-                        document.getElementById('not-survive-sound').play();
-                    }
-                }
-            </script>
-        {% endif %}
+            <input type="hidden" id="deck_level" name="deck_level" required>
+            <p id="selected-deck-display" class="selected-deck-display">Selected Deck: None</p>
+        </div>
+        <div class="form-container">
+            <form id="prediction-form" action="/" method="post">
+                <div class="form-group">
+                    <label for="sex">Sex:</label>
+                    <select id="sex" name="sex" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="pclass">Passenger Class (1, 2, or 3):</label>
+                    <input type="number" id="pclass" name="pclass" min="1" max="3" required>
+                </div>
+                <div class="form-group">
+                    <label for="is_alone">Traveling Alone? (0 for No, 1 for Yes):</label>
+                    <input type="number" id="is_alone" name="is_alone" min="0" max="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="has_child">Has Child? (0 for No, 1 for Yes):</label>
+                    <input type="number" id="has_child" name="has_child" min="0" max="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="family_size">Family Size (including yourself):</label>
+                    <input type="number" id="family_size" name="family_size" min="1" required>
+                </div>
+                <button type="submit" class="predict-button">Predict Survival</button>
+            </form>
+        </div>
     </div>
+    
+    <div id="survive-container" class="animation-stage"></div>
+    <div id="not-survive-container" class="animation-stage"></div>
+    
+    {% if prediction_text %}
+        <div id="prediction-result" class="result {% if 'survive' in prediction_text %}survived-text{% else %}not-survived-text{% endif %}">
+            <p>{{ prediction_text }}</p>
+            {% if confidence_level %}
+                <p>Confidence: {{ confidence_level }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <audio id="drum-roll-sound" src="sounds/drum_roll.mp3" preload="auto"></audio>
+    <audio id="survive-sound" src="sounds/survived.mp3" preload="auto"></audio>
+    <audio id="not-survive-sound" src="sounds/not_survived.mp3" preload="auto"></audio>
+    
+    {% if prediction_value is not none %}
+        <script>
+            window.predictionValue = {{ prediction_value | tojson }};
+        </script>
+    {% else %}
+        <script>
+            window.predictionValue = null;
+        </script>
+    {% endif %}
 </body>
 </html>

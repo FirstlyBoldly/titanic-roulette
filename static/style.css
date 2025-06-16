@@ -1,45 +1,249 @@
-body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
-.container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-h1 { text-align: center; color: #0056b3; }
-form div { margin-bottom: 15px; }
-label { display: block; margin-bottom: 5px; font-weight: bold; }
-input[type="text"], input[type="number"], select {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+/* General Body and Main Layout */
+.main-hull-background {
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 0; /* Remove default body padding to prevent scroll */
+    background-color: #36454F; /* "Black - Main hull... Therefore, it is actually a dark gray."*/
+    color: #F8F8F8; /* Light text for contrast on dark hull background */
+    min-height: 100vh; /* This is crucial: ensure body is at least full viewport height */
+}
+
+.main-title {
+    color: #FFD700; /* "Yellow - vessel name" */
+    font-size: 3.5em; /* Larger title */
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    text-shadow: 3px 3px 5px rgba(0,0,0,0.5); /* More pronounced shadow */
+    letter-spacing: 2px;
+}
+
+/* Content Wrapper for Form and Deck Selector */
+.content-wrapper {
+    display: flex; /* Use flexbox to place form and deck selector side-by-side */
+    gap: 30px; /* Space between the form and deck selector */
+    max-width: 1200px; /* Max width for the combined content */
+    width: 95%; /* Responsive width */
+    margin: 20px auto; /* Center the wrapper and add vertical margin */
+    padding: 30px;
+    background-color: #F8F8F8; /* "White - White painted part of ship, deckhouses..." */
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    border: 3px solid #FFD700; /* "Yellow - sheer line between the hull black and white." */
+    box-sizing: border-box;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: center; /* Center items if they wrap */
+}
+
+/* Form Container */
+.form-container {
+    flex: 1; /* Allow form to take available space */
+    min-width: 300px; /* Minimum width for the form */
+    padding: 25px;
+    background-color: #ECEFF1; /* Light gray for form background */
+    border-radius: 5px;
     box-sizing: border-box;
 }
-button {
-    background-color: #007bff;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="number"],
+select {
     width: 100%;
+    padding: 12px;
+    border: 1px solid #778899; /* Medium gray border, hints at 'Dark Mast' */
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: white;
+    font-size: 1em;
+    color: #333;
 }
-button:hover {
-    background-color: #0056b3;
-}
-.result {
-    margin-top: 25px;
-    padding: 15px;
+
+.predict-button {
+    background-color: #b22222; /* Inspired by Antifouling red */
+    color: white;
+    padding: 15px 25px;
+    border: none;
     border-radius: 5px;
-    background-color: #e9ecef;
+    cursor: pointer;
+    font-size: 1.2em;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.predict-button:hover {
+    background-color: #8B0000; /* Darker red on hover */
+}
+
+/* Deck Selection Section - Now styled to be beside the form */
+.deck-selection-group {
+    flex: 1; /* Allow deck selector to take available space */
+    min-width: 300px; /* Minimum width for the deck selector */
+    padding: 15px;
+    border: 1px solid #A9A9A9; /* Concrete-like border */
+    border-radius: 5px;
+    background-color: #E0E0E0; /* Lighter background for this section */
+    position: relative; /* For absolute positioning of hotspots */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    box-sizing: border-box;
+}
+
+.titanic-cross-section-container {
+    position: relative;
+    width: 100%; /* Make container responsive */
+    max-width: 400px; /* Max width for the image */
+    margin-top: 15px;
+}
+
+.titanic-cross-section-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 2px solid #4F4F4F; /* Dark Mast border */
+}
+
+.deck-hotspot {
+    position: absolute;
+    background-color: rgba(255, 255, 0, 0.3); /* Semi-transparent yellow for hotspots */
+    border: 2px solid #FFD700; /* Yellow border */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #4F4F4F; /* Dark text on yellow hotspot */
+    font-size: 1.2em;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    padding: 2px;
+}
+
+.deck-hotspot:hover {
+    background-color: rgba(255, 255, 0, 0.6);
+    border-color: #FFC400;
+}
+
+.deck-hotspot.selected {
+    background-color: rgba(34, 139, 34, 0.7); /* Green when selected */
+    border-color: #228B22; /* Green border for selected */
+    color: white;
+}
+
+/* Specific positioning for each deck hotspot (these are approximate and might need fine-tuning) */
+/* These values are highly dependent on the image resolution and aspect ratio */
+/* You'll need to adjust 'top' and 'height' based on your specific image.
+   'left' and 'width' can be relatively constant if the labels are aligned vertically. */
+
+.deck-hotspot#deck-A { top: 12%; left: 5%; width: 15%; height: 10%; } /* A: Upper promenade deck */
+.deck-hotspot#deck-B { top: 22%; left: 5%; width: 15%; height: 10%; } /* B: Promenade deck, glass enclosed */
+.deck-hotspot#deck-C { top: 32%; left: 5%; width: 15%; height: 10%; } /* C: Upper deck */
+.deck-hotspot#deck-D { top: 42%; left: 5%; width: 15%; height: 10%; } /* D: Saloon deck */
+.deck-hotspot#deck-E { top: 52%; left: 5%; width: 15%; height: 10%; } /* E: Main deck */
+.deck-hotspot#deck-F { top: 62%; left: 5%; width: 15%; height: 10%; } /* F: Middle deck */
+.deck-hotspot#deck-G { top: 72%; left: 5%; width: 15%; height: 10%; } /* G: Lower deck, cargo, coal bunkers, boiler, engine */
+
+
+.selected-deck-display {
+    margin-top: 15px;
     font-size: 1.1em;
     font-weight: bold;
+    color: #b22222; /* Antifouling red for emphasis */
 }
-.survived { color: #28a745; }
-.not-survived { color: #dc3545; }
 
-/* Styles for Lottie animation containers */
-.animation-container {
-    width: 200px; /* Adjust size as needed */
-    height: 200px; /* Adjust size as needed */
-    margin: 20px auto;
-    display: none; /* Hidden by default */
+/* Result and Animation sections - Now full width */
+#prediction-result,
+#animation-stage {
+    max-width: none; /* Override any max-width */
+    margin: 30px 0; /* Vertical margin, no horizontal margin */
+    padding: 30px 0; /* Add padding to content within */
+    box-sizing: border-box; /* Include padding in width */
+    border-radius: 0; /* Remove border-radius to align with full width */
+    box-shadow: none; /* Remove shadows */
+    text-align: center; /* Center text within result */
+}
+
+#prediction-result {
+    font-size: 2em; /* Larger text for full-width result */
+    background-color: #F0E68C; /* "White Star Buff" background for results */
+    color: #333; /* Dark text on buff background */
+    border-top: 5px solid; /* Solid border top */
+    border-bottom: 5px solid; /* Solid border bottom */
+    /* border-color handled by .survived-text / .not-survived-text */
+}
+
+.survived-text {
+    border-color: #228B22; /* Green border for survived */
+}
+
+.not-survived-text {
+    border-color: #DC143C; /* Red border for not survived */
+}
+
+#animation-stage {
+    min-height: 500px; /* Even taller for more pronounced animation */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 800px) {
+    .content-wrapper {
+        flex-direction: column; /* Stack form and deck selector vertically on smaller screens */
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .form-container,
+    .deck-selection-group {
+        width: 100%;
+        min-width: unset; /* Remove min-width constraint */
+    }
+
+    .main-title {
+        font-size: 2.5em; /* Adjust title size for smaller screens */
+        margin-top: 20px;
+    }
+
+    #prediction-result {
+        font-size: 1.5em;
+        padding: 20px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-hull-background {
+        padding: 10px;
+    }
+
+    .content-wrapper {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .predict-button {
+        font-size: 1em;
+        padding: 12px 20px;
+    }
+    .deck-hotspot {
+        font-size: 1em;
+    }
 }
