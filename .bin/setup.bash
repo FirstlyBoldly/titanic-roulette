@@ -1,3 +1,4 @@
+cd ../
 npx webpack --config webpack.config.js
 cd server/
 gcloud builds submit --tag gcr.io/titanicroulette/flask-app

@@ -48,6 +48,9 @@ build/Release
 node_modules/
 venv/
 
+# Dist
+static/main.js
+
 # Optional npm cache directory
 .npm
 

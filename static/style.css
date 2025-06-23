@@ -1,249 +1,425 @@
-/* General Body and Main Layout */
-.main-hull-background {
-    font-family: 'Georgia', serif;
+body {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    background: linear-gradient(to bottom, #2c3e50, #34495e);
+    color: #ecf0f1;
     margin: 0;
-    padding: 0; /* Remove default body padding to prevent scroll */
-    background-color: #36454F; /* "Black - Main hull... Therefore, it is actually a dark gray."*/
-    color: #F8F8F8; /* Light text for contrast on dark hull background */
-    min-height: 100vh; /* This is crucial: ensure body is at least full viewport height */
+    padding: 0;
+    font-size: 2rem;
 }
 
 .main-title {
-    color: #FFD700; /* "Yellow - vessel name" */
-    font-size: 3.5em; /* Larger title */
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5rem;
     text-align: center;
-    margin-top: 40px;
-    margin-bottom: 30px;
-    text-shadow: 3px 3px 5px rgba(0,0,0,0.5); /* More pronounced shadow */
-    letter-spacing: 2px;
+    margin: 60px auto 50px;
+    letter-spacing: 4px;
+    font-weight: 900;
+    color: #e6e6e6;
+    background: linear-gradient(180deg, #f0e68c 0%, #b8860b 50%, #f0e68c 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border: 2px solid;
+    border-image: linear-gradient(45deg, #FFD700, #DAA520, #B8860B) 1;
+    padding: 15px 30px;
+    display: inline-block;
+    box-shadow:
+        0 8px 15px rgba(0,0,0,0.4),
+        inset 0 0 30px rgba(255,255,255,0.1);
+    position: relative;
 }
 
-/* Content Wrapper for Form and Deck Selector */
+.main-title::before,
+.main-title::after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle at center, #FFD700 0%, #B8860B 70%, transparent 100%);
+    border: 2px solid #DAA520;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255,215,0,0.6);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.main-title::before {
+    left: -18px;
+}
+
+.main-title::after {
+    right: -18px;
+}
+
 .content-wrapper {
-    display: flex; /* Use flexbox to place form and deck selector side-by-side */
-    gap: 30px; /* Space between the form and deck selector */
-    max-width: 1200px; /* Max width for the combined content */
-    width: 95%; /* Responsive width */
-    margin: 20px auto; /* Center the wrapper and add vertical margin */
-    padding: 30px;
-    background-color: #F8F8F8; /* "White - White painted part of ship, deckhouses..." */
-    border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-    border: 3px solid #FFD700; /* "Yellow - sheer line between the hull black and white." */
-    box-sizing: border-box;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    justify-content: center; /* Center items if they wrap */
+    max-width: 1000px;
+    margin: 30px auto;
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    border: none;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    color: #333;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Form Container */
-.form-container {
-    flex: 1; /* Allow form to take available space */
-    min-width: 300px; /* Minimum width for the form */
-    padding: 25px;
-    background-color: #ECEFF1; /* Light gray for form background */
-    border-radius: 5px;
+#prediction-form {
+    display: block;
+    overflow: hidden;
+    padding: 0;
+}
+
+#slide-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    width: 100%;
+    flex-shrink: 0;
+    padding: 8px;
     box-sizing: border-box;
+}
+
+fieldset.form-container {
+    flex: 1;
+    min-width: 320px;
+    padding: 30px;
+    background-color: #f7f9fb;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     text-align: left;
 }
 
-label {
+label, span {
+    font-size: 1.5rem;
     display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+legend {
+    font-weight: 700;
+    color: #34495e;
+    padding: 0 10px;
+    text-align: center;
+    width: auto;
+    border-bottom: 2px solid #e67e22;
+    line-height: 1.5;
 }
 
 input[type="number"],
 select {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #778899; /* Medium gray border, hints at 'Dark Mast' */
-    border-radius: 4px;
+    padding: 14px;
+    border: 1px solid #bdc3c7;
+    border-radius: 8px;
     box-sizing: border-box;
-    background-color: white;
-    font-size: 1em;
+    background-color: #ffffff;
     color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="number"]:focus,
+select:focus {
+    border-color: #e67e22;
+    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+    outline: none;
 }
 
 .predict-button {
-    background-color: #b22222; /* Inspired by Antifouling red */
+    background: linear-gradient(to right, #e74c3c, #c0392b);
     color: white;
-    padding: 15px 25px;
+    padding: 18px 28px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 1.3rem;
     width: 100%;
-    transition: background-color 0.3s ease;
-    font-weight: bold;
+    transition: all 0.3s ease;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .predict-button:hover {
-    background-color: #8B0000; /* Darker red on hover */
+    background: linear-gradient(to right, #c0392b, #e74c3c);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transform: translateY(-2px);
 }
 
-/* Deck Selection Section - Now styled to be beside the form */
-.deck-selection-group {
-    flex: 1; /* Allow deck selector to take available space */
-    min-width: 300px; /* Minimum width for the deck selector */
-    padding: 15px;
-    border: 1px solid #A9A9A9; /* Concrete-like border */
-    border-radius: 5px;
-    background-color: #E0E0E0; /* Lighter background for this section */
-    position: relative; /* For absolute positioning of hotspots */
+fieldset.deck-selection-group,
+fieldset.embark-selection-group {
+    min-width: 320px;
+    border-radius: 10px;
+    background-color: #f7f9fb;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     box-sizing: border-box;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
 }
 
-.titanic-cross-section-container {
+.deck-select-option,
+.embark-select-option {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.deck-select-option label,
+.embark-select-option label {
+    margin-bottom: 10px;
+    color: #34495e;
+}
+
+figure.titanic-cross-section-container,
+figure.embarkation-map-container {
     position: relative;
-    width: 100%; /* Make container responsive */
-    max-width: 400px; /* Max width for the image */
-    margin-top: 15px;
+    width: 100%;
 }
 
-.titanic-cross-section-image {
+.titanic-cross-section-image,
+.embarkation-map-image {
     width: 100%;
     height: auto;
     display: block;
-    border: 2px solid #4F4F4F; /* Dark Mast border */
+    border: 1px solid #bdc3c7;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.deck-hotspot,
+.embark-hotspot {
+    position: absolute;
+    background-color: rgba(52, 152, 219, 0.4);
+    border: 2px solid #2980b9;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #000000;
+    font-size: 1.5rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    text-align: center;
 }
 
 .deck-hotspot {
-    position: absolute;
-    background-color: rgba(255, 255, 0, 0.3); /* Semi-transparent yellow for hotspots */
-    border: 2px solid #FFD700; /* Yellow border */
-    cursor: pointer;
-    display: flex;
+    justify-content: flex-start;
+    padding: 0 0 0 8px;
+}
+
+.embark-hotspot {
     justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    color: #4F4F4F; /* Dark text on yellow hotspot */
-    font-size: 1.2em;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-    padding: 2px;
 }
 
-.deck-hotspot:hover {
-    background-color: rgba(255, 255, 0, 0.6);
-    border-color: #FFC400;
+.deck-hotspot:hover,
+.embark-hotspot:hover {
+    background-color: rgba(41, 128, 185, 0.6);
+    border-color: #1a5276;
+    transform: scale(1.03);
 }
 
-.deck-hotspot.selected {
-    background-color: rgba(34, 139, 34, 0.7); /* Green when selected */
-    border-color: #228B22; /* Green border for selected */
+.deck-hotspot.selected,
+.embark-hotspot.selected {
+    background-color: #27ae60;
+    border-color: #229954;
     color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transform: scale(1.05);
 }
 
-/* Specific positioning for each deck hotspot (these are approximate and might need fine-tuning) */
-/* These values are highly dependent on the image resolution and aspect ratio */
-/* You'll need to adjust 'top' and 'height' based on your specific image.
-   'left' and 'width' can be relatively constant if the labels are aligned vertically. */
+/* Specific hotspot positioning (retained from original for functionality) */
+.deck-hotspot#deck-A { top: 50%; left: 4%; width: 84%; height: 5%; }
+.deck-hotspot#deck-B { top: 56%; left: 4%; width: 84%; height: 4%; }
+.deck-hotspot#deck-C { top: 61%; left: 4%; width: 84%; height: 5%; }
+.deck-hotspot#deck-D { top: 67%; left: 4%; width: 84%; height: 5%; }
+.deck-hotspot#deck-E { top: 73%; left: 4%; width: 84%; height: 4%; }
+.deck-hotspot#deck-F { top: 78%; left: 4%; width: 84%; height: 5%; }
+.deck-hotspot#deck-G { top: 84%; left: 4%; width: 84%; height: 4%; }
 
-.deck-hotspot#deck-A { top: 12%; left: 5%; width: 15%; height: 10%; } /* A: Upper promenade deck */
-.deck-hotspot#deck-B { top: 22%; left: 5%; width: 15%; height: 10%; } /* B: Promenade deck, glass enclosed */
-.deck-hotspot#deck-C { top: 32%; left: 5%; width: 15%; height: 10%; } /* C: Upper deck */
-.deck-hotspot#deck-D { top: 42%; left: 5%; width: 15%; height: 10%; } /* D: Saloon deck */
-.deck-hotspot#deck-E { top: 52%; left: 5%; width: 15%; height: 10%; } /* E: Main deck */
-.deck-hotspot#deck-F { top: 62%; left: 5%; width: 15%; height: 10%; } /* F: Middle deck */
-.deck-hotspot#deck-G { top: 72%; left: 5%; width: 15%; height: 10%; } /* G: Lower deck, cargo, coal bunkers, boiler, engine */
-
+/* Specific hotspot positioning for Embarkation map (YOU'LL NEED TO ADJUST THESE BASED ON YOUR IMAGE) */
+.embark-hotspot#embark-Q { top: 30%; left: 1%; width: 10%; height: 10%; }
+.embark-hotspot#embark-S { top: 50%; left: 85%; width: 10%; height: 10%; }
+.embark-hotspot#embark-C { top: 70%; left: 82%; width: 10%; height: 10%; }
 
 .selected-deck-display {
-    margin-top: 15px;
-    font-size: 1.1em;
+    margin-top: 20px;
+    font-size: 2rem;
     font-weight: bold;
-    color: #b22222; /* Antifouling red for emphasis */
-}
-
-/* Result and Animation sections - Now full width */
-#prediction-result,
-#animation-stage {
-    max-width: none; /* Override any max-width */
-    margin: 30px 0; /* Vertical margin, no horizontal margin */
-    padding: 30px 0; /* Add padding to content within */
-    box-sizing: border-box; /* Include padding in width */
-    border-radius: 0; /* Remove border-radius to align with full width */
-    box-shadow: none; /* Remove shadows */
-    text-align: center; /* Center text within result */
+    color: #2980b9;
+    background-color: #ecf0f1;
+    padding: 8px 15px;
+    border-radius: 5px;
 }
 
 #prediction-result {
-    font-size: 2em; /* Larger text for full-width result */
-    background-color: #F0E68C; /* "White Star Buff" background for results */
-    color: #333; /* Dark text on buff background */
-    border-top: 5px solid; /* Solid border top */
-    border-bottom: 5px solid; /* Solid border bottom */
-    /* border-color handled by .survived-text / .not-survived-text */
+    color: white;
+    text-align: center;
+    border-radius: 0 0 12px 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: inset 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .survived-text {
-    border-color: #228B22; /* Green border for survived */
+    background-color: #229954;
 }
 
 .not-survived-text {
-    border-color: #DC143C; /* Red border for not survived */
+    background-color: #e74c3c;
 }
 
-#animation-stage {
-    min-height: 500px; /* Even taller for more pronounced animation */
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding: 0 40px; /* Adjust padding to make space for dots below */
+    padding-bottom: 20px; /* Reduced bottom padding */
 }
 
-/* Media Queries for Responsiveness */
+.nav-button {
+    background: linear-gradient(to right, #3498db, #2980b9);
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    flex: 1;
+    margin: 0 10px;
+}
+
+.nav-button:hover {
+    background: linear-gradient(to right, #2980b9, #3498db);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    transform: translateY(-1px);
+}
+
+#predict-button {
+    flex: 1;
+}
+
 @media (max-width: 800px) {
-    .content-wrapper {
-        flex-direction: column; /* Stack form and deck selector vertically on smaller screens */
-        gap: 20px;
-        padding: 20px;
+    .slide {
+        padding: 0;
     }
-
-    .form-container,
-    .deck-selection-group {
-        width: 100%;
-        min-width: unset; /* Remove min-width constraint */
+    .form-navigation {
+        padding: 0 30px 20px; /* Adjust padding */
+    }
+    .nav-button {
+        padding: 12px 20px;
+        font-size: 1rem;
     }
 
     .main-title {
-        font-size: 2.5em; /* Adjust title size for smaller screens */
-        margin-top: 20px;
+        font-size: 3.5rem;
+        padding: 10px 20px;
+        margin: 40px auto 30px;
+    }
+
+    .main-title::before,
+    .main-title::after {
+        width: 20px;
+        height: 20px;
+    }
+
+    .main-title::before {
+        left: -13px;
+    }
+
+    .main-title::after {
+        right: -13px;
     }
 
     #prediction-result {
-        font-size: 1.5em;
-        padding: 20px 10px;
+        font-size: 2rem;
     }
 }
 
 @media (max-width: 480px) {
-    .main-hull-background {
+    body {
+        font-size: 1.3rem;
         padding: 10px;
     }
 
-    .content-wrapper {
-        padding: 15px;
+    label, span {
+        font-size: 1rem;
     }
 
-    h1 {
-        font-size: 2em;
+    .main-title {
+        font-size: 2.5rem;
+        padding: 8px 15px;
+        margin: 20px auto;
+        letter-spacing: 2px;
+    }
+
+    .main-title::before,
+    .main-title::after {
+        display: none;
+    }
+
+    .content-wrapper {
+        width: 100%;
+        margin: 15px auto;
+        border-radius: 8px;
+    }
+
+    .deck-hotspot {
+        padding: 0 0 0 4px;
+        font-size: 1rem;
+    }
+
+    #prediction-form {
+        padding: 0;
+    }
+
+    fieldset.form-container {
+        padding: 20px;
+        min-width: unset;
+    }
+
+    fieldset.deck-selection-group,
+    fieldset.embark-selection-group {
+        padding: 0;
+        min-width: unset;
+    }
+
+    legend {
+        margin-bottom: 15px;
+    }
+
+    input[type="number"],
+    select {
+        padding: 10px;
     }
 
     .predict-button {
-        font-size: 1em;
-        padding: 12px 20px;
+        padding: 14px 20px;
+        border-radius: 8px;
     }
-    .deck-hotspot {
-        font-size: 1em;
+
+    #prediction-result {
+        font-size: 1.5rem;
+        border-radius: 0 0 8px 8px;
     }
 }
