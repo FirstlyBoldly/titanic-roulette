@@ -1,0 +1,6 @@
+# This file tells web crawlers which pages or files the crawler can or can't request from your site.
+# The asterisk (*) applies this rule to all crawlers.
+User-agent: *
+
+# The slash (/) tells crawlers not to visit any page on the site.
+Disallow: /

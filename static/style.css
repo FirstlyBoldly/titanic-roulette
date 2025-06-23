@@ -12,7 +12,7 @@ body {
     font-family: 'Playfair Display', serif;
     font-size: 4.5rem;
     text-align: center;
-    margin: 60px auto 50px;
+    margin: 20px auto; /* Adjusted margin */
     letter-spacing: 4px;
     font-weight: 900;
     color: #e6e6e6;
@@ -24,14 +24,12 @@ body {
     border-image: linear-gradient(45deg, #FFD700, #DAA520, #B8860B) 1;
     padding: 15px 30px;
     display: inline-block;
-    box-shadow:
-        0 8px 15px rgba(0,0,0,0.4),
-        inset 0 0 30px rgba(255,255,255,0.1);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.4), inset 0 0 30px rgba(255,255,255,0.1);
     position: relative;
 }
 
-.main-title::before,
-.main-title::after {
+/* ... (main-title::before and main-title::after styles remain the same) ... */
+.main-title::before, .main-title::after {
     content: "";
     position: absolute;
     width: 30px;
@@ -43,13 +41,12 @@ body {
     top: 50%;
     transform: translateY(-50%);
 }
+.main-title::before { left: -18px; }
+.main-title::after { right: -18px; }
 
-.main-title::before {
-    left: -18px;
-}
 
-.main-title::after {
-    right: -18px;
+.links-container {
+    margin-bottom: 30px;
 }
 
 .content-wrapper {
@@ -69,31 +66,28 @@ body {
 
 #prediction-form {
     display: block;
-    overflow: hidden;
-    padding: 0;
+    padding: 20px;
 }
 
-#slide-container {
+/* NEW: Flex container for the two fieldsets */
+.form-layout-container {
     display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.slide {
+    gap: 20px;
     width: 100%;
-    flex-shrink: 0;
-    padding: 8px;
-    box-sizing: border-box;
+    align-items: stretch;
 }
 
-fieldset.form-container {
-    flex: 1;
-    min-width: 320px;
-    padding: 30px;
+/* The two fieldsets will now act as columns */
+fieldset.form-container, fieldset.embark-selection-group {
+    flex: 1; /* Each takes up half the space */
+    min-width: 0; /* Prevents flex items from overflowing */
     background-color: #f7f9fb;
     border-radius: 10px;
     box-sizing: border-box;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-group {
@@ -102,7 +96,7 @@ fieldset.form-container {
 }
 
 label, span {
-    font-size: 1.5rem;
+    font-size: 1.2rem; /* Adjusted for better fit */
     display: block;
     margin-bottom: 10px;
     font-weight: 600;
@@ -117,6 +111,11 @@ legend {
     width: auto;
     border-bottom: 2px solid #e67e22;
     line-height: 1.5;
+}
+
+figure {
+    margin: 0;
+    padding: 0;
 }
 
 input[type="number"],
@@ -138,20 +137,29 @@ select:focus {
     outline: none;
 }
 
-.predict-button {
-    background: linear-gradient(to right, #e74c3c, #c0392b);
+.form-submission-area {
+    margin-top: 30px;
+}
+
+.predict-button, .retry-button {
     color: white;
     padding: 18px 28px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     font-size: 1.3rem;
-    width: 100%;
+    width: 50%; /* Or adjust as needed */
     transition: all 0.3s ease;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    margin: 10px auto;
+    display: block;
+}
+
+.predict-button {
+    background: linear-gradient(to right, #e74c3c, #c0392b);
 }
 
 .predict-button:hover {
@@ -160,41 +168,23 @@ select:focus {
     transform: translateY(-2px);
 }
 
-fieldset.deck-selection-group,
-fieldset.embark-selection-group {
-    min-width: 320px;
-    border-radius: 10px;
-    background-color: #f7f9fb;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    box-sizing: border-box;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    border: 1px solid #e0e0e0;
-}
-
-.deck-select-option,
+/* Embarkation styles remain largely the same */
 .embark-select-option {
-    margin-top: 20px;
+    margin-top: auto; /* Pushes dropdown to the bottom */
     width: 100%;
     text-align: center;
+    padding-top: 20px; /* Add space above it */
 }
 
-.deck-select-option label,
 .embark-select-option label {
     margin-bottom: 10px;
     color: #34495e;
 }
 
-figure.titanic-cross-section-container,
 figure.embarkation-map-container {
     position: relative;
-    width: 100%;
 }
 
-.titanic-cross-section-image,
 .embarkation-map-image {
     width: 100%;
     height: auto;
@@ -204,7 +194,6 @@ figure.embarkation-map-container {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.deck-hotspot,
 .embark-hotspot {
     position: absolute;
     background-color: rgba(52, 152, 219, 0.4);
@@ -212,32 +201,21 @@ figure.embarkation-map-container {
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
     font-weight: bold;
     color: #000000;
     font-size: 1.5rem;
     transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     border-radius: 4px;
-    text-align: center;
 }
 
-.deck-hotspot {
-    justify-content: flex-start;
-    padding: 0 0 0 8px;
-}
-
-.embark-hotspot {
-    justify-content: center;
-}
-
-.deck-hotspot:hover,
 .embark-hotspot:hover {
     background-color: rgba(41, 128, 185, 0.6);
     border-color: #1a5276;
     transform: scale(1.03);
 }
 
-.deck-hotspot.selected,
 .embark-hotspot.selected {
     background-color: #27ae60;
     border-color: #229954;
@@ -246,180 +224,89 @@ figure.embarkation-map-container {
     transform: scale(1.05);
 }
 
-/* Specific hotspot positioning (retained from original for functionality) */
-.deck-hotspot#deck-A { top: 50%; left: 4%; width: 84%; height: 5%; }
-.deck-hotspot#deck-B { top: 56%; left: 4%; width: 84%; height: 4%; }
-.deck-hotspot#deck-C { top: 61%; left: 4%; width: 84%; height: 5%; }
-.deck-hotspot#deck-D { top: 67%; left: 4%; width: 84%; height: 5%; }
-.deck-hotspot#deck-E { top: 73%; left: 4%; width: 84%; height: 4%; }
-.deck-hotspot#deck-F { top: 78%; left: 4%; width: 84%; height: 5%; }
-.deck-hotspot#deck-G { top: 84%; left: 4%; width: 84%; height: 4%; }
-
-/* Specific hotspot positioning for Embarkation map (YOU'LL NEED TO ADJUST THESE BASED ON YOUR IMAGE) */
+/* Hotspot positioning for Embarkation map */
 .embark-hotspot#embark-Q { top: 30%; left: 1%; width: 10%; height: 10%; }
 .embark-hotspot#embark-S { top: 50%; left: 85%; width: 10%; height: 10%; }
 .embark-hotspot#embark-C { top: 70%; left: 82%; width: 10%; height: 10%; }
 
-.selected-deck-display {
-    margin-top: 20px;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #2980b9;
-    background-color: #ecf0f1;
-    padding: 8px 15px;
-    border-radius: 5px;
-}
-
 #prediction-result {
     color: white;
     text-align: center;
-    border-radius: 0 0 12px 12px;
     font-weight: 600;
     letter-spacing: 0.5px;
     box-shadow: inset 0 5px 15px rgba(0,0,0,0.1);
+    padding: 10px 0;
 }
 
-.survived-text {
-    background-color: #229954;
-}
+.survived-text { background-color: #229954; }
+.not-survived-text { background-color: #e74c3c; }
 
-.not-survived-text {
-    background-color: #e74c3c;
-}
-
-.form-navigation {
+.action-buttons-container {
     display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-    padding: 0 40px; /* Adjust padding to make space for dots below */
-    padding-bottom: 20px; /* Reduced bottom padding */
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+    padding: 0 20px;
+    align-items: stretch;
 }
 
-.nav-button {
-    background: linear-gradient(to right, #3498db, #2980b9);
+/* UPDATED: A single base class for consistent styling */
+.action-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
     padding: 15px 25px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    font-weight: 600;
+    font-family: 'Roboto', sans-serif; /* Ensures font consistency */
+    font-size: 1.1rem;
+    text-decoration: none;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     flex: 1;
-    margin: 0 10px;
+    max-width: 300px;
+    text-align: center;
 }
 
-.nav-button:hover {
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* UPDATED: Color modifier classes */
+.btn-blue {
+    background: linear-gradient(to right, #3498db, #2980b9);
+}
+.btn-blue:hover {
     background: linear-gradient(to right, #2980b9, #3498db);
-    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-    transform: translateY(-1px);
 }
 
-#predict-button {
-    flex: 1;
+.btn-green {
+    background: linear-gradient(to right, #27ae60, #229954);
+}
+.btn-green:hover {
+    background: linear-gradient(to right, #229954, #27ae60);
 }
 
+/* Responsive adjustments for the new layout */
 @media (max-width: 800px) {
-    .slide {
-        padding: 0;
+    .form-layout-container {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
     }
-    .form-navigation {
-        padding: 0 30px 20px; /* Adjust padding */
-    }
-    .nav-button {
-        padding: 12px 20px;
-        font-size: 1rem;
-    }
-
-    .main-title {
-        font-size: 3.5rem;
-        padding: 10px 20px;
-        margin: 40px auto 30px;
-    }
-
-    .main-title::before,
-    .main-title::after {
-        width: 20px;
-        height: 20px;
-    }
-
-    .main-title::before {
-        left: -13px;
-    }
-
-    .main-title::after {
-        right: -13px;
-    }
-
-    #prediction-result {
-        font-size: 2rem;
-    }
+    .main-title { font-size: 3.5rem; }
 }
 
 @media (max-width: 480px) {
-    body {
-        font-size: 1.3rem;
-        padding: 10px;
-    }
-
-    label, span {
-        font-size: 1rem;
-    }
-
-    .main-title {
-        font-size: 2.5rem;
-        padding: 8px 15px;
-        margin: 20px auto;
-        letter-spacing: 2px;
-    }
-
-    .main-title::before,
-    .main-title::after {
-        display: none;
-    }
-
-    .content-wrapper {
-        width: 100%;
-        margin: 15px auto;
-        border-radius: 8px;
-    }
-
-    .deck-hotspot {
-        padding: 0 0 0 4px;
-        font-size: 1rem;
-    }
-
-    #prediction-form {
-        padding: 0;
-    }
-
-    fieldset.form-container {
-        padding: 20px;
-        min-width: unset;
-    }
-
-    fieldset.deck-selection-group,
-    fieldset.embark-selection-group {
-        padding: 0;
-        min-width: unset;
-    }
-
-    legend {
-        margin-bottom: 15px;
-    }
-
-    input[type="number"],
-    select {
-        padding: 10px;
-    }
-
-    .predict-button {
-        padding: 14px 20px;
-        border-radius: 8px;
-    }
-
-    #prediction-result {
-        font-size: 1.5rem;
-        border-radius: 0 0 8px 8px;
-    }
+    body { font-size: 1.3rem; padding: 10px; }
+    label, span { font-size: 1rem; }
+    .main-title { font-size: 2.5rem; letter-spacing: 2px; }
+    .main-title::before, .main-title::after { display: none; }
+    .content-wrapper { width: 100%; margin: 15px auto; }
+    .predict-button { width: 100%; }
+    .action-buttons-container { flex-direction: column; }
 }
