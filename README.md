@@ -1,2 +1,3 @@
-# ai-systems-dev1-gw2
-.
+# Titanic Roulette
+
+For class purposes.
